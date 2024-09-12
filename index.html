@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Resume Matcher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #000 url('https://cdnjs.cloudflare.com/ajax/libs/perliedman/leaflet.restoreview/0.7.0/stars.png') repeat;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(106, 17, 203, 0.2) 0%, rgba(37, 117, 252, 0.2) 100%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(106, 17, 203, 0.5), 0 0 40px rgba(37, 117, 252, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        textarea, input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #00ffff;
+            border-radius: 8px;
+            transition: all 0.3s;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        textarea:focus, input[type="file"]:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        button[type="submit"] {
+            padding: 12px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(45deg, #2575fc, #6a11cb);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(106, 17, 203, 0.8);
+        }
+
+        .card {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(37, 117, 252, 0.5);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #00ffff;
+            margin-top: 20px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Cosmic Job Description and Resume Matcher
+            </div>
+            <div class="card-body">
+                <h2>Unlock Your Stellar Career</h2>
+                <form action="/matcher" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="job-description">Cosmic Job Description</label>
+                        <textarea class="form-control" name="job-description" id="job-description" rows="5"
+                            placeholder="Enter the job description from across the universe..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="resumes">Upload Stellar Resumes</label>
+                        <input type="file" name="resumes" id="resumes" class="form-control" multiple required
+                            accept=".pdf,.docx,.txt">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Launch Cosmic Match</button>
+                </form>
+
+                {% if message %}
+                <p class="message">{{ message }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createStars() {
+            const body = document.body;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * windowWidth}px`;
+                star.style.top = `${Math.random() * windowHeight}px`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                body.appendChild(star);
+            }
+        }
+
+        window.onload = createStars;
+    </script>
+</body>
+
+</html>
