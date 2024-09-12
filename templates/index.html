@@ -53,32 +53,28 @@
 </head>
 <body>
 
-    <div class="conatiner">
+    <div class="container">
         <div class="card">
             <div class="card-header">
-
-                <h2>Job describtion and resuem maker</h2>
+                <h2>Job Description and Resume Matcher</h2>
             </div>
             <form action="/matcher" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="job-description">job-description</label>
-                    <textarea class="form-control" name ="job-description" id="job-description"></textarea>
-
+                    <label for="job-description">Job Description</label>
+                    <textarea class="form-control" name="job-description" id="job-description" rows="4"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="resumes">Upload resumes</label>
-                    <p>please Upload resume more than 5 </p>
-                    <input type="file" name="resumes"  id="resumes" class="form-control" multiple required accept=".pdf,.docx,.txt">
-
+                    <label for="resumes">Upload Resumes</label>
+                    <p>Please upload at least 5 resumes.</p>
+                    <input type="file" name="resumes" id="resumes" class="form-control" multiple required accept=".pdf,.docx,.txt">
                 </div>
-                <button type=" submit" class="btn btn-primary">Match resume</button>
+                <button type="submit" class="btn btn-primary">Match Resumes</button>
             </form>
+            {% if message %}
+            <p>{{ message }}</p>
+            {% endif %}
         </div>
     </div>
 
-
-
-    <h1>Welcome to Resume Matching!</h1>
-    <p>This is the homepage.</p>
 </body>
 </html>
